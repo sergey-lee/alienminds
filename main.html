@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlienMinds - Mobile & Web Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: #000000;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #ffffff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            /* width: 30px;
+            height: 30px;
+            background: #ffffff;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; */
+            position: relative;
+                   margin-right: 15px; /* Добавить этот отступ */
+        }
+
+        .logo-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    background-image: url('logo-light.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+        .lang-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .lang-btn:hover, .lang-btn.active {
+            background: #ffffff;
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 6rem 0;
+            color: #ffffff;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            font-weight: 100;
+            letter-spacing: 8px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.7;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #ffffff;
+            color: #000000;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Section Styles */
+        .section {
+            margin: 6rem 0;
+            padding: 4rem 0;
+        }
+
+        .section-light {
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            color: #ffffff;
+            font-weight: 100;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            transition: left 0.6s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .service-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            transition: left 0.6s ease;
+        }
+
+        .team-card:hover::before {
+            left: 100%;
+        }
+
+        .team-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .team-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+.team-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+        .team-card h4 {
+            color: #ffffff;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .team-role {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .team-bio {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Technologies Section */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 2rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            transition: left 0.6s ease;
+        }
+
+        .tech-item:hover::before {
+            left: 100%;
+        }
+
+        .tech-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .tech-item .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-item h4 {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Process Section */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .process-step {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            position: relative;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .process-step::before {
+            content: attr(data-step);
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            color: #000000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            transition: left 0.6s ease;
+        }
+
+        .process-step:hover::after {
+            left: 100%;
+        }
+
+        .process-step:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .process-step h3 {
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .process-step p {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Portfolio Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .portfolio-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            transition: left 0.6s ease;
+            z-index: 1;
+        }
+
+        .portfolio-item:hover::before {
+            left: 100%;
+        }
+
+        .portfolio-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .portfolio-img {
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .portfolio-content {
+            padding: 2rem;
+        }
+
+        .portfolio-content h4 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .portfolio-content p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            transition: left 0.6s ease;
+        }
+
+        .testimonial:hover::before {
+            left: 100%;
+        }
+
+        .testimonial:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .testimonial-quote {
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            color: #ffffff;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            transition: left 0.6s ease;
+        }
+
+        .stat-item:hover::before {
+            left: 100%;
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 100;
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 1rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* About Section */
+        .about {
+            text-align: center;
+        }
+
+        .about p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        /* Contact Section */
+        .contact {
+            text-align: center;
+        }
+
+        .contact-info {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        .contact-info a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 400;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            border-bottom: 1px solid #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Language content visibility */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+
+            .hero .subtitle {
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .services-grid, .tech-grid, .process-grid, .portfolio-grid, .testimonials-grid, .stats-grid, .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .service-card, .team-card, .process-step, .testimonial, .stat-item {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon"></div>
+                    alienminds
+                </a>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="switchLanguage('ru')">RU</button>
+                    <button class="lang-btn" onclick="switchLanguage('ko')">KO</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- English Content -->
+            <div class="lang-content active" id="en-content">
+                <section class="hero">
+                    <h1>ALIENMINDS</h1>
+                    <p class="subtitle">Mobile & Web App Solutions</p>
+                    <a href="#contact" class="cta-button">Get Started</a>
+                </section>
+
+                <section class="section">
+                    <h2>Services</h2>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-icon">📱</div>
+                            <h3>iOS Native Development</h3>
+                            <p>Native iOS applications built with Swift and SwiftUI, delivering optimal performance and seamless integration with Apple ecosystem.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🤖</div>
+                            <h3>Android Native Development</h3>
+                            <p>High-performance Android apps using Kotlin and Jetpack Compose, following Material Design principles and modern architecture patterns.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🚀</div>
+                            <h3>Flutter Development</h3>
+                            <p>Cross-platform applications with Flutter and Dart, enabling single codebase deployment to both iOS and Android with native performance.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🎨</div>
+                            <h3>Mobile UI/UX Design</h3>
+                            <p>Platform-specific design systems that follow iOS Human Interface Guidelines and Android Material Design for intuitive user experiences.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">💻</div>
+                            <h3>Web Development</h3>
+                            <p>Modern web applications and admin panels to complement your mobile solutions with responsive design and API integration.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🔧</div>
+                            <h3>App Store Optimization</h3>
+                            <p>Complete App Store and Google Play deployment, optimization, and ongoing maintenance to maximize your app's visibility and performance.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light">
+                    <h2>Our Team</h2>
+                    <div class="team-grid">
+                        <div class="team-card">
+                            <div class="team-photo">
+                                <img src="sergey.jpg" alt="Lee Sergey" />
+                            </div>
+                            <h4>Lee Sergey</h4>
+                            <div class="team-role">CEO / Lead iOS Developer</div>
+                            <p class="team-bio">Senior iOS developer with 6+ years of experience in Swift and SwiftUI. Expert in Core Data,
+                                CloudKit, and App Store optimization.</p>
+                        </div>
+                        <div class="team-card">
+                             <div class="team-photo">
+                                <img src="joon.jpg" alt="Lee Joonnyong" />
+                            </div>
+                            <h4>Lee Joonnyong</h4>
+                            <div class="team-role">CTO / Data Scientist</div>
+                            <p class="team-bio">Technology leader and data science expert with 10+ years of experience in AI/ML, system architecture, and team management. Specializes in scalable data solutions and technical strategy.</p>
+                        </div>
+                        <div class="team-card">
+                            <div class="team-photo">
+                                <img src="diana.jpg" alt="Diana Abrin" />
+                            </div>
+                            <h4>Diana Abrin</h4>
+                            <div class="team-role">UI/UX Designer</div>
+                            <p class="team-bio">Creative designer focused on mobile interfaces and user experience. Specializes in creating intuitive and beautiful app designs.</p>
+                        </div>
+                        <div class="team-card">
+                            <div class="team-photo">
+                                <img src="matthew.jpg" alt="Matthew Webster" />
+                            </div>
+                            <h4>Matthew Webster</h4>
+                            <div class="team-role">Flutter Developer</div>
+                            <p class="team-bio">Cross-platform development expert with deep knowledge of Flutter, Dart, and Firebase integration. 5+ years of experience.</p>
+                        </div>
+                        <div class="team-card">
+                            <div class="team-photo">
+                                <img src="jenny.jpg" alt="Jenny Kim" />
+                            </div>
+                            <h4>Jenny Kim</h4>
+                            <div class="team-role">Project Manager</div>
+                            <p class="team-bio">Experienced project manager ensuring smooth delivery of complex mobile projects. Expert in Agile methodologies and client communication.</p>
+                        </div>
+                        <div class="team-card">
+                            <div class="team-photo">
+                                <img src="anton.jpg" alt="Emelyanov Anton" />
+                            </div>
+                            <h4>Anton Emelyanov</h4>
+                            <div class="team-role">Backend Developer</div>
+                            <p class="team-bio">Backend specialist focusing on APIs, cloud services, and database optimization. Expert in Node.js, Python, and AWS infrastructure.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Technologies</h2>
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <div class="tech-icon">🍎</div>
+                            <h4>Swift</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">📱</div>
+                            <h4>SwiftUI</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🤖</div>
+                            <h4>Kotlin</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🎨</div>
+                            <h4>Jetpack Compose</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">💙</div>
+                            <h4>Flutter</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🎯</div>
+                            <h4>Dart</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚛️</div>
+                            <h4>React</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">📱</div>
+                            <h4>React Native</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🔷</div>
+                            <h4>TypeScript</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <h4>JavaScript</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🌐</div>
+                            <h4>Node.js</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🚀</div>
+                            <h4>Next.js</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <h4>Vite</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🎨</div>
+                            <h4>Tailwind CSS</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🔥</div>
+                            <h4>Firebase</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">☁️</div>
+                            <h4>AWS</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🐳</div>
+                            <h4>Docker</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">📊</div>
+                            <h4>PostgreSQL</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🍃</div>
+                            <h4>MongoDB</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <h4>Redis</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🔧</div>
+                            <h4>GraphQL</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🌐</div>
+                            <h4>REST API</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🐍</div>
+                            <h4>Python</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">☕</div>
+                            <h4>Java</h4>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light">
+                    <h2>Process</h2>
+                    <div class="process-grid">
+                        <div class="process-step" data-step="1">
+                            <h3>Discovery</h3>
+                            <p>We analyze your requirements and create a detailed project roadmap.</p>
+                        </div>
+                        <div class="process-step" data-step="2">
+                            <h3>Design</h3>
+                            <p>Our designers create intuitive and engaging user interfaces.</p>
+                        </div>
+                        <div class="process-step" data-step="3">
+                            <h3>Development</h3>
+                            <p>Expert developers bring your vision to life with clean, scalable code.</p>
+                        </div>
+                        <div class="process-step" data-step="4">
+                            <h3>Testing</h3>
+                            <p>Rigorous testing ensures your application works flawlessly.</p>
+                        </div>
+                        <div class="process-step" data-step="5">
+                            <h3>Launch</h3>
+                            <p>We deploy your application and provide ongoing support.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Portfolio</h2>
+                    <div class="portfolio-grid">
+                        <div class="portfolio-item">
+                            <div class="portfolio-img">🍎</div>
+                            <div class="portfolio-content">
+                                <h4>iOS Banking App</h4>
+                                <p>Native iOS banking application built with Swift and SwiftUI, featuring biometric authentication and real-time transactions.</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-img">🤖</div>
+                            <div class="portfolio-content">
+                                <h4>Android E-Commerce Platform</h4>
+                                <p>High-performance Android shopping app using Kotlin and Jetpack Compose with advanced filtering and payment integration.</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-img">💙</div>
+                            <div class="portfolio-content">
+                                <h4>Flutter Social Network</h4>
+                                <p>Cross-platform social media app built with Flutter, featuring real-time messaging, video calls, and content sharing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light">
+                    <h2>Testimonials</h2>
+                    <div class="testimonials-grid">
+                        <div class="testimonial">
+                            <div class="testimonial-quote">"AlienMinds delivered an exceptional mobile app that exceeded our expectations. Their attention to detail and technical expertise is outstanding."</div>
+                            <div class="testimonial-author">— Sarah Johnson, CEO</div>
+                        </div>
+                        <div class="testimonial">
+                            <div class="testimonial-quote">"Working with AlienMinds was a great experience. They understood our vision and delivered a perfect solution on time and within budget."</div>
+                            <div class="testimonial-author">— Michael Chen, CTO</div>
+                        </div>
+                        <div class="testimonial">
+                            <div class="testimonial-quote">"The team at AlienMinds is highly professional and skilled. They transformed our business processes with their innovative digital solutions."</div>
+                            <div class="testimonial-author">— Anna Rodriguez, Founder</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Stats</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Projects Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">30+</div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Support</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light about">
+                    <h2>About Us</h2>
+                    <p>At AlienMinds, we believe in pushing the boundaries of technology to create exceptional digital experiences. Our team of expert developers combines creativity with technical expertise to deliver solutions that drive business growth and user engagement. We are passionate about innovation and committed to excellence in every project we undertake.</p>
+                </section>
+
+                <section class="section contact" id="contact">
+                    <h2>Contact</h2>
+                    <div class="contact-info">
+                        <p>Ready to bring your ideas to life?</p>
+                        <p>Visit us at: <a href="https://alienminds.net">alienminds.net</a></p>
+                        <p>Let's create something amazing together!</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Russian Content -->
+            <div class="lang-content" id="ru-content">
+                <section class="hero">
+                    <h1>ALIENMINDS</h1>
+                    <p class="subtitle">Экспертная мобильная разработка</p>
+                    <a href="#contact" class="cta-button">Начать проект</a>
+                </section>
+
+                <section class="section">
+                    <h2>Услуги</h2>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-icon">📱</div>
+                            <h3>Нативная разработка iOS</h3>
+                            <p>Нативные iOS приложения на Swift и SwiftUI с оптимальной производительностью и интеграцией в экосистему Apple.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🤖</div>
+                            <h3>Нативная разработка Android</h3>
+                            <p>Высокопроизводительные Android приложения на Kotlin и Jetpack Compose с соблюдением принципов Material Design.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🚀</div>
+                            <h3>Flutter разработка</h3>
+                            <p>Кроссплатформенные приложения на Flutter и Dart с единой кодовой базой для iOS и Android с нативной производительностью.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🎨</div>
+                            <h3>Мобильный UI/UX дизайн</h3>
+                            <p>Платформо-специфичные дизайн-системы, следующие iOS Human Interface Guidelines и Android Material Design.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">💻</div>
+                            <h3>Веб-разработка</h3>
+                            <p>Современные веб-приложения и админ-панели в дополнение к мобильным решениям с адаптивным дизайном.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🔧</div>
+                            <h3>Оптимизация App Store</h3>
+                            <p>Полный цикл публикации в App Store и Google Play, оптимизация и поддержка для максимальной видимости приложений.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light">
+                    <h2>Наша команда</h2>
+                    <div class="team-grid">
+                        <div class="team-card">
+                            <div class="team-photo">
+                                <img src="sergey.jpg" alt="Сергей Ли" />
+                            </div>
+                            <h4>Ли Сергей</h4>
+                            <div class="team-role">CEO / Lead iOS разработчик</div>
+                            <p class="team-bio">Старший разработчик iOS с более чем 6-летним опытом работы в Swift и SwiftUI. Эксперт в Core Data, CloudKit и оптимизации App Store.</p>
+                        </div>
+                        <div class="team-card">
+                             <div class="team-photo">
+                                <img src="joon.jpg" alt="Lee Joonnyong" />
+                            </div>
+                            <h4>Ли Джуннён</h4>
+                            <div class="team-role">CTO / Data Scientist</div>
+                            <p class="team-bio">Лидер технологий и эксперт в Data Science с более чем 10-летним опытом в области AI/ML, системной архитектуры и управления командой. Специализируется на масштабируемых решениях для данных и технической стратегии.</p>
+                        </div>
+                        <div class="team-card">
+                            <div class="team-photo">
+                                <img src="diana.jpg" alt="Diana Abrin" />
+                            </div>
+                            <h4>Диана Абрин</h4>
+                            <div class="team-role">UI/UX Дизайнер</div>
+                            <p class="team-bio">Креативный дизайнер, ориентированный на мобильные интерфейсы и пользовательский опыт. Специализируется на создании интуитивно понятных и красивых дизайнов приложений.</p>
+                        </div>
+                        <div class="team-card">
+                            <div class="team-photo">
+                                <img src="matthew.jpg" alt="Matthew Webster" />
+                            </div>
+                            <h4>Мэтью Вэбстер</h4>
+                            <div class="team-role">Flutter разработчик</div>
+                            <p class="team-bio">Эксперт по кроссплатформенной разработке с глубокими знаниями интеграции Flutter, Dart и Firebase. Более 5 лет опыта.</p>
+                        </div>
+                        <div class="team-card">
+                            <div class="team-photo">
+                                <img src="jenny.jpg" alt="Jenny Kim" />
+                            </div>
+                            <h4>Ким Дженни</h4>
+                            <div class="team-role">Project Manager</div>
+                            <p class="team-bio">Опытный менеджер проектов, обеспечивающий бесперебойную реализацию сложных мобильных проектов. Эксперт в области Agile-методологий и клиентской коммуникации.</p>
+                        </div>
+                        <div class="team-card">
+                            <div class="team-photo">
+                                <img src="anton.jpg" alt="Emelyanov Anton" />
+                            </div>
+                            <h4>Емельянов Антон</h4>
+                            <div class="team-role">Backend Разработчик</div>
+                            <p class="team-bio">Специалист по бэкэнду, специализирующийся на API, облачных сервисах и оптимизации баз данных. Эксперт в Node.js, Python и инфраструктуре AWS.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Технологии</h2>
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <div class="tech-icon">🍎</div>
+                            <h4>Swift</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">📱</div>
+                            <h4>SwiftUI</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🤖</div>
+                            <h4>Kotlin</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🎨</div>
+                            <h4>Jetpack Compose</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">💙</div>
+                            <h4>Flutter</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🎯</div>
+                            <h4>Dart</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚛️</div>
+                            <h4>React</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">📱</div>
+                            <h4>React Native</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🔷</div>
+                            <h4>TypeScript</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <h4>JavaScript</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🌐</div>
+                            <h4>Node.js</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🚀</div>
+                            <h4>Next.js</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <h4>Vite</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🎨</div>
+                            <h4>Tailwind CSS</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🔥</div>
+                            <h4>Firebase</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">☁️</div>
+                            <h4>AWS</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🐳</div>
+                            <h4>Docker</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">📊</div>
+                            <h4>PostgreSQL</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🍃</div>
+                            <h4>MongoDB</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <h4>Redis</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🔧</div>
+                            <h4>GraphQL</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🌐</div>
+                            <h4>REST API</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🐍</div>
+                            <h4>Python</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">☕</div>
+                            <h4>Java</h4>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light">
+                    <h2>Процесс</h2>
+                    <div class="process-grid">
+                        <div class="process-step" data-step="1">
+                            <h3>Исследование</h3>
+                            <p>Анализируем ваши требования и создаем детальный план проекта.</p>
+                        </div>
+                        <div class="process-step" data-step="2">
+                            <h3>Дизайн</h3>
+                            <p>Наши дизайнеры создают интуитивные и привлекательные интерфейсы.</p>
+                        </div>
+                        <div class="process-step" data-step="3">
+                            <h3>Разработка</h3>
+                            <p>Опытные разработчики воплощают ваше видение в чистом, масштабируемом коде.</p>
+                        </div>
+                        <div class="process-step" data-step="4">
+                            <h3>Тестирование</h3>
+                            <p>Тщательное тестирование обеспечивает безупречную работу приложения.</p>
+                        </div>
+                        <div class="process-step" data-step="5">
+                            <h3>Запуск</h3>
+                            <p>Развертываем ваше приложение и обеспечиваем постоянную поддержку.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Портфолио</h2>
+                    <div class="portfolio-grid">
+                        <div class="portfolio-item">
+                            <div class="portfolio-img">🍎</div>
+                            <div class="portfolio-content">
+                                <h4>iOS банковское приложение</h4>
+                                <p>Нативное iOS банковское приложение на Swift и SwiftUI с биометрической аутентификацией и транзакциями в реальном времени.</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-img">🤖</div>
+                            <div class="portfolio-content">
+                                <h4>Android E-Commerce платформа</h4>
+                                <p>Высокопроизводительное Android приложение для покупок на Kotlin и Jetpack Compose с расширенной фильтрацией и интеграцией платежей.</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-img">💙</div>
+                            <div class="portfolio-content">
+                                <h4>Flutter социальная сеть</h4>
+                                <p>Кроссплатформенное приложение социальных медиа на Flutter с обменом сообщениями в реальном времени, видеозвонками и обменом контентом.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light">
+                    <h2>Отзывы</h2>
+                    <div class="testimonials-grid">
+                        <div class="testimonial">
+                            <div class="testimonial-quote">"AlienMinds создали исключительное мобильное приложение, которое превзошло наши ожидания. Их внимание к деталям и техническая экспертиза впечатляют."</div>
+                            <div class="testimonial-author">— Сара Джонсон, CEO</div>
+                        </div>
+                        <div class="testimonial">
+                            <div class="testimonial-quote">"Работать с AlienMinds было прекрасно. Они поняли наше видение и создали идеальное решение в срок и в рамках бюджета."</div>
+                            <div class="testimonial-author">— Михаил Чен, CTO</div>
+                        </div>
+                        <div class="testimonial">
+                            <div class="testimonial-quote">"Команда AlienMinds высокопрофессиональна и квалифицирована. Они трансформировали наши бизнес-процессы инновационными решениями."</div>
+                            <div class="testimonial-author">— Анна Родригес, Основатель</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>Статистика</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Завершенных проектов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">30+</div>
+                            <div class="stat-label">Довольных клиентов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Лет опыта</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Поддержка</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light about">
+                    <h2>О нас</h2>
+                    <p>В AlienMinds мы верим в расширение границ технологий для создания исключительного цифрового опыта. Наша команда экспертов-разработчиков сочетает креативность с техническими знаниями для создания решений, которые способствуют росту бизнеса и вовлечению пользователей. Мы страстно увлечены инновациями и стремимся к совершенству в каждом проекте.</p>
+                </section>
+
+                <section class="section contact" id="contact">
+                    <h2>Контакты</h2>
+                    <div class="contact-info">
+                        <p>Готовы воплотить ваши идеи в жизнь?</p>
+                        <p>Посетите нас: <a href="https://alienminds.net">alienminds.net</a></p>
+                        <p>Давайте создадим что-то потрясающее вместе!</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Korean Content -->
+            <div class="lang-content" id="ko-content">
+                <section class="hero">
+                    <h1>ALIENMINDS</h1>
+                    <p class="subtitle">전문 모바일 개발</p>
+                    <a href="#contact" class="cta-button">프로젝트 시작</a>
+                </section>
+
+                <section class="section">
+                    <h2>서비스</h2>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <div class="service-icon">📱</div>
+                            <h3>iOS 네이티브 개발</h3>
+                            <p>Swift와 SwiftUI로 구축된 네이티브 iOS 애플리케이션으로 최적의 성능과 Apple 생태계 완벽 통합을 제공합니다.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🤖</div>
+                            <h3>Android 네이티브 개발</h3>
+                            <p>Kotlin과 Jetpack Compose를 사용한 고성능 Android 앱으로 Material Design 원칙과 현대적 아키텍처를 따릅니다.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🚀</div>
+                            <h3>Flutter 개발</h3>
+                            <p>Flutter와 Dart를 사용한 크로스 플랫폼 애플리케이션으로 단일 코드베이스로 iOS와 Android에 네이티브 성능을 제공합니다.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">🎨</div>
+                            <h3>모바일 UI/UX 디자인</h3>
+                            <p>iOS Human Interface Guidelines와 Android Material Design을 따르는 플랫폼별 디자인 시스템으로 직관적인 사용자 경험을 제공합니다.</p>
+                        </div>
+                        <div class="service-card">
+                            <div class="service-icon">💻</div>
+                            <h3>웹 개발</h3><p>모바일 솔루션을 보완하는 반응형 디자인과 API 통합이 포함된 현대적인 웹 애플리케이션과 관리자 패널을 제작합니다.</p>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon">🔧</div>
+                                <h3>앱스토어 최적화</h3>
+                                <p>App Store 및 Google Play 완전 배포, 최적화 및 지속적인 유지보수를 통해 앱의 가시성과 성능을 극대화합니다.</p>
+                            </div>
+                            </div>
+                            </section>
+                            
+                            <section class="section section-light">
+                                <h2>팀 소개</h2>
+                                <div class="team-grid">
+                                    <div class="team-card">
+                                        <div class="team-photo">
+                                            <img src="sergey.jpg" alt="이 세르게이" />
+                                        </div>
+                                        <h4>이 세르게이</h4>
+                                        <div class="team-role">CEO / 수석 iOS 개발자</div>
+                                        <p class="team-bio">Swift와 SwiftUI에서 6년 이상의 경험을 가진 시니어 iOS 개발자. Core Data, CloudKit 및 App Store 최적화 전문가.</p>
+                                    </div>
+                                    <div class="team-card">
+                                        <div class="team-photo">
+                                            <img src="joon.jpg" alt="이 준용" />
+                                        </div>
+                                        <h4>이 준용</h4>
+                                        <div class="team-role">CTO / 데이터 사이언티스트</div>
+                                        <p class="team-bio">AI/ML, 시스템 아키텍처 및 팀 관리 분야에서 10년 이상의 경험을 가진 기술 리더이자 데이터 사이언스 전문가. 확장 가능한 데이터 솔루션 및 기술 전략
+                                            전문.</p>
+                                    </div>
+                                    <div class="team-card">
+                                        <div class="team-photo">
+                                            <img src="diana.jpg" alt="다이애나 아브린" />
+                                        </div>
+                                        <h4>다이애나 아브린</h4>
+                                        <div class="team-role">UI/UX 디자이너</div>
+                                        <p class="team-bio">모바일 인터페이스와 사용자 경험에 중점을 둔 창의적 디자이너. 직관적이고 아름다운 앱 디자인 제작 전문.</p>
+                                    </div>
+                                    <div class="team-card">
+                                        <div class="team-photo">
+                                            <img src="matthew.jpg" alt="매튜 웹스터" />
+                                        </div>
+                                        <h4>매튜 웹스터</h4>
+                                        <div class="team-role">Flutter 개발자</div>
+                                        <p class="team-bio">Flutter, Dart 및 Firebase 통합에 대한 깊은 지식을 가진 크로스 플랫폼 개발 전문가. 5년 이상의 경험.</p>
+                                    </div>
+                                    <div class="team-card">
+                                        <div class="team-photo">
+                                            <img src="jenny.jpg" alt="제니 김" />
+                                        </div>
+                                        <h4>제니 김</h4>
+                                        <div class="team-role">프로젝트 매니저</div>
+                                        <p class="team-bio">복잡한 모바일 프로젝트의 원활한 전달을 보장하는 경험 많은 프로젝트 매니저. Agile 방법론 및 고객 커뮤니케이션 전문가.</p>
+                                    </div>
+                                    <div class="team-card">
+                                        <div class="team-photo">
+                                            <img src="anton.jpg" alt="안톤 에멜야노프" />
+                                        </div>
+                                        <h4>안톤 에멜야노프</h4>
+                                        <div class="team-role">백엔드 개발자</div>
+                                        <p class="team-bio">API, 클라우드 서비스 및 데이터베이스 최적화에 집중하는 백엔드 전문가. Node.js, Python 및 AWS 인프라 전문가.</p>
+                                    </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>기술</h2>
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <div class="tech-icon">🍎</div>
+                            <h4>Swift</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">📱</div>
+                            <h4>SwiftUI</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🤖</div>
+                            <h4>Kotlin</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🎨</div>
+                            <h4>Jetpack Compose</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">💙</div>
+                            <h4>Flutter</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🎯</div>
+                            <h4>Dart</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚛️</div>
+                            <h4>React</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">📱</div>
+                            <h4>React Native</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🔷</div>
+                            <h4>TypeScript</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <h4>JavaScript</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🌐</div>
+                            <h4>Node.js</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🚀</div>
+                            <h4>Next.js</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <h4>Vite</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🎨</div>
+                            <h4>Tailwind CSS</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🔥</div>
+                            <h4>Firebase</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">☁️</div>
+                            <h4>AWS</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🐳</div>
+                            <h4>Docker</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">📊</div>
+                            <h4>PostgreSQL</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🍃</div>
+                            <h4>MongoDB</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">⚡</div>
+                            <h4>Redis</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🔧</div>
+                            <h4>GraphQL</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🌐</div>
+                            <h4>REST API</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">🐍</div>
+                            <h4>Python</h4>
+                        </div>
+                        <div class="tech-item">
+                            <div class="tech-icon">☕</div>
+                            <h4>Java</h4>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light">
+                    <h2>프로세스</h2>
+                    <div class="process-grid">
+                        <div class="process-step" data-step="1">
+                            <h3>요구사항 분석</h3>
+                            <p>고객의 요구사항을 분석하고 세부적인 프로젝트 로드맵을 작성합니다.</p>
+                        </div>
+                        <div class="process-step" data-step="2">
+                            <h3>디자인</h3>
+                            <p>직관적이고 매력적인 사용자 인터페이스를 디자인합니다.</p>
+                        </div>
+                        <div class="process-step" data-step="3">
+                            <h3>개발</h3>
+                            <p>전문 개발자들이 깨끗하고 확장 가능한 코드로 비전을 구현합니다.</p>
+                        </div>
+                        <div class="process-step" data-step="4">
+                            <h3>테스팅</h3>
+                            <p>철저한 테스트를 통해 애플리케이션이 완벽하게 작동하도록 보장합니다.</p>
+                        </div>
+                        <div class="process-step" data-step="5">
+                            <h3>출시</h3>
+                            <p>애플리케이션을 배포하고 지속적인 지원을 제공합니다.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>포트폴리오</h2>
+                    <div class="portfolio-grid">
+                        <div class="portfolio-item">
+                            <div class="portfolio-img">🍎</div>
+                            <div class="portfolio-content">
+                                <h4>iOS 뱅킹 앱</h4>
+                                <p>Swift와 SwiftUI로 구축된 네이티브 iOS 뱅킹 애플리케이션으로 생체 인증 및 실시간 거래 기능을 제공합니다.</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-img">🤖</div>
+                            <div class="portfolio-content">
+                                <h4>Android 전자상거래 플랫폼</h4>
+                                <p>고급 필터링 및 결제 통합이 포함된 Kotlin과 Jetpack Compose를 사용한 고성능 Android 쇼핑 앱.</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item">
+                            <div class="portfolio-img">💙</div>
+                            <div class="portfolio-content">
+                                <h4>Flutter 소셜 네트워크</h4>
+                                <p>실시간 메시징, 화상 통화 및 콘텐츠 공유 기능이 포함된 Flutter로 구축된 크로스 플랫폼 소셜 미디어 앱.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light">
+                    <h2>고객 후기</h2>
+                    <div class="testimonials-grid">
+                        <div class="testimonial">
+                            <div class="testimonial-quote">"AlienMinds는 저희 기대를 뛰어넘는 뛰어난 모바일 앱을 제공했습니다. 세부사항에 대한 관심과 기술적 전문성이 뛰어납니다."</div>
+                            <div class="testimonial-author">— 사라 존슨, CEO</div>
+                        </div>
+                        <div class="testimonial">
+                            <div class="testimonial-quote">"AlienMinds와 함께 작업하는 것은 훌륭한 경험이었습니다. 저희 비전을 이해하고 시간과 예산 내에서 완벽한 솔루션을 제공했습니다."</div>
+                            <div class="testimonial-author">— 마이클 첸, CTO</div>
+                        </div>
+                        <div class="testimonial">
+                            <div class="testimonial-quote">"AlienMinds 팀은 매우 전문적이고 숙련되어 있습니다. 혁신적인 디지털 솔루션으로 저희 비즈니스 프로세스를 변화시켜 주었습니다."</div>
+                            <div class="testimonial-author">— 안나 로드리게스, 창립자</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>성과 통계</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">완료된 프로젝트</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">30+</div>
+                            <div class="stat-label">만족한 고객</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">년 경험</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">지원</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section section-light about">
+                    <h2>회사 소개</h2>
+                    <p>AlienMinds에서는 기술의 경계를 넓혀 뛰어난 디지털 경험을 만들어낸다고 믿습니다. 전문 개발자 팀이 창의성과 기술적 전문성을 결합하여 비즈니스 성장과 사용자 참여를 촉진하는 솔루션을 제공합니다. 저희는 혁신에 열정적이며 모든 프로젝트에서 완벽함을 추구합니다.</p>
+                </section>
+
+                <section class="section contact" id="contact">
+                    <h2>문의하기</h2>
+                    <div class="contact-info">
+                        <p>아이디어를 현실로 만들 준비가 되셨나요?</p>
+                        <p>저희를 방문하세요: <a href="https://alienminds.net">alienminds.net</a></p>
+                        <p>함께 놀라운 것을 만들어봅시다!</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AlienMinds. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchLanguage(lang) {
+            // Hide all language content
+            const contents = document.querySelectorAll('.lang-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Show selected language content
+            document.getElementById(lang + '-content').classList.add('active');
+            
+            // Update active language button
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update document language
+            document.documentElement.lang = lang;
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const activeContent = document.querySelector('.lang-content.active');
+                const targetElement = activeContent.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.98)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+            }
+        });
+
+        // Animate stats on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        const finalNumber = stat.textContent;
+                        if (!stat.classList.contains('animated')) {
+                            stat.classList.add('animated');
+                            animateNumber(stat, finalNumber);
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        function animateNumber(element, finalNumber) {
+            const isNumberOnly = /^\d+$/.test(finalNumber);
+            if (isNumberOnly) {
+                const num = parseInt(finalNumber);
+                let current = 0;
+                const increment = num / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= num) {
+                        element.textContent = finalNumber;
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(current);
+                    }
+                }, 40);
+            }
+        }
+
+        // Observe all stats sections
+        document.querySelectorAll('.stats-grid').forEach(statsGrid => {
+            observer.observe(statsGrid);
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add entrance animations
+        const observeElements = document.querySelectorAll('.service-card, .team-card, .tech-item, .process-step, .portfolio-item, .testimonial, .stat-item');
+        
+        const fadeInObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        observeElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            fadeInObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
